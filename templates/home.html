@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% load utils %}
+
+{% block content %}
+
+
+
+    <div class="row">
+        {% for group in groups %}
+            <div class="col-xs-12 col-sm-{{ 12|div:groups.count }}">
+                <div class="panel panel-{{ group.style }}" style=" margin-top: 20px;">
+                    <div class="panel-heading">
+                        <h3 class="panel-title" style="text-align: center;"><b>{{ group.name }}</b></h3>
+                    </div>
+                    <div class="panel-body">
+                        {% for prop in group.properties.all %}
+                            {#СОДЕРЖИМОЕ ПАНЕЛИ#}
+
+                            <button class="btn  has-spinner col-xs-12" id="btn{{ prop.pk }}" groupStyle="{{ group.style }}"
+                                    style="margin-top: 5px; ">
+                                <span class="minus glyphicon glyphicon-minus pull-left"></span>
+                                {{ prop.name }}
+                                <span class="plus glyphicon glyphicon-plus pull-right" style="right:7px;"></span>
+                            </button>
+
+                        {% endfor %}
+                        {#КОНЕЦ СОДЕРЖИМОЕ ПАНЕЛИ#}
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+    </div>
+    <form action="/test/" method="post">
+    {% for group in groups %}
+        {% for prop in group.properties.all %}
+            <input type="checkbox" name="cb{{ prop.pk }}" id="cb{{ prop.pk }}" hidden="true">
+
+        {% endfor %}
+    {% endfor %}
+        <button class="btn btn-large" onclick="clickSubmit()"> ОТПРАВИТЬ ЗАПРОС</button>
+    {% csrf_token %}
+    </form>
+
+
+{% endblock %}
+

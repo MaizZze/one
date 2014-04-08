@@ -1,0 +1,98 @@
+{% load url from future %}
+
+{% load bootstrap3 %}
+{% load i18n %}
+
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<style type="text/css">
+    .minus,
+    .plus{
+        display: inline-block;
+        width: 0;
+
+        -webkit-transition: opacity 1s;
+        -moz-transition: opacity 1s;
+        -o-transition: opacity 1s;
+        transition: opacity 1s;
+    }
+
+    .plus{
+        opacity: 0;
+    }
+    .minus{
+        opacity: 0.3;
+    }
+
+    .has-spinner.active .plus {
+        opacity: 1;
+    }
+    .has-spinner.active .minus {
+        opacity: 0;
+    }
+
+    .has-spinner {
+        -webkit-transition: all 0.5s;
+        -moz-transition:  all 0.5s;
+        -o-transition:  all 0.5s;
+        transition:  all 0.5s;
+    }
+
+</style>
+<script type="text/javascript">//<![CDATA[
+function clickSubmit()
+{
+   $('.has-spinner').each(function(index)
+   {
+        if ($(this).hasClass('active'))
+        {
+            $('#'+$(this)[0].id.replace('btn','cb'))[0].checked = true;
+        }
+        else
+        {
+            $('#'+$(this)[0].id.replace('btn','cb'))[0].checked = false;
+        }
+   });
+};
+
+$(window).load(function () {
+    $(function () {
+        $('.has-spinner').click(function () {
+            var groupStyle = $(this)[0].getAttribute('groupStyle');
+{#            if ($(this).hasClass('active'))#}
+{#            {#}
+{#                $(this).removeClass('btn-'+groupStyle);#}
+{#            }#}
+{#            else#}
+{#            {#}
+{#                $('#'+$(this)[0].id.replace('btn','cb'))[0].checked = true;#}
+{#            }#}
+
+
+            $(this).toggleClass('btn-'+groupStyle);
+            $(this).toggleClass('active');
+        });
+    });
+});//]]>
+
+</script>
+
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% block bootstrap3_content %}
+
+    {#    {% block nav %}#}
+    {##}
+    {#        <nav class="navbar navbar-default">#}
+    {##}
+    {#        </nav>#}
+    {#    {% endblock %}#}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 col-xs-offset-4">
+                {% bootstrap_messages %}
+            </div>
+        </div>
+        {% block content %}(no content){% endblock %}
+    </div>
+{% endblock %}
